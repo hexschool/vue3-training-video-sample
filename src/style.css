@@ -1,0 +1,260 @@
+/* 整個範例集共用的基本樣式。刻意很少：這裡要看的是 Vue 的行為，
+   不是版面設計，樣式多了反而會蓋掉範例自己 <style scoped> 想示範的東西
+   （例如 v-bind class / style 那兩節）。 */
+
+:root {
+  --line: #e2e5e2;
+  --ink: #232925;
+  --muted: #6b736c;
+  --brand: #42b883;
+  --ground: #f7f9f7;
+  font-family: -apple-system, "Helvetica Neue", "PingFang TC", "Noto Sans TC", sans-serif;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+}
+
+/* ── 版面 ─────────────────────────────────────────────────────────────
+   清單與範例輪流佔滿整個畫面，兩者用同一個容器，換頁時左右邊界不會跳。 */
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+/* ── 首頁清單 ─────────────────────────────────────────────────────── */
+
+.home h1 {
+  margin: 0 0 20px;
+  font-size: 22px;
+}
+
+.home__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+/* 一整列都是點擊範圍，不是只有標題那幾個字：清單要能快速點，
+   而游標落在哪裡不該影響點不點得到。 */
+.home__list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 120ms ease-out, background 120ms ease-out;
+}
+
+.home__list a:hover {
+  border-color: var(--brand);
+  background: var(--ground);
+}
+
+.home__list a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* 編號固定寬度、等寬數字：13 支的個位數與兩位數要對齊，
+   不然標題會在第 10 支的地方整排往右錯開一格。 */
+.home__num {
+  flex: 0 0 24px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.home__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.home__title {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* 講義出處在清單上就看得到，不用進去才知道這一支對應哪一節 */
+.home__from {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* 箭頭平常很淡，滑過去才明顯——它只是在說「這一列點得進去」，
+   不需要 13 個深色箭頭一直在畫面右邊排成一行。 */
+.home__go {
+  color: var(--line);
+  transition: color 120ms ease-out;
+}
+
+.home__list a:hover .home__go {
+  color: var(--brand);
+}
+
+/* 還沒開放的那一堂：跟可點的列同一個外框，但不是連結，也沒有 hover。
+   虛線框與淡字告訴人「這一列存在、只是還沒到」。 */
+.home__upcoming {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+}
+
+/* 標題上面那一排：回總覽、切換到純 JS 那半邊 */
+.home__links {
+  display: flex;
+  gap: 16px;
+}
+
+/* 環境切換排在標題上面：它跟標題是同一層——兩個並列的半邊，不是清單的附註。
+   壓在清單底下的話，要換去純 JS 那邊得先滑過 16 支範例。 */
+.home__link {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.home__link:hover {
+  color: var(--brand);
+}
+
+/* ── 範例區 ───────────────────────────────────────────────────────── */
+
+/* 返回鍵在畫面最上面，比標題還前面：離開這一頁是這裡第一個要找得到的動作。
+   長得像連結而不像按鈕——它的份量不該壓過範例本身。 */
+.stage__back {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.stage__back:hover {
+  color: var(--brand);
+}
+
+.stage__back:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.stage__head {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stage__head h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+/* 編號跟清單上的對得起來，所以進來之後還知道自己在第幾支 */
+.stage__num {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* 每支範例對應講義的哪一節。範例本身不寫這件事——它要留著跟講義逐字對照，
+   所以出處記在導覽的資料裡（見 src/demos.js 的 DEMOS），由這裡顯示。 */
+.stage__from {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stage__body > :first-child {
+  margin-top: 0;
+}
+
+/* 上一支／下一支。space-between 配上兩個空的 <span> 佔位，
+   所以只有「下一支」的時候它仍然靠右，不會自己跑到左邊去。 */
+.stage__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.stage__foot a {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.stage__foot a:hover {
+  border-color: var(--brand);
+  color: var(--ink);
+}
+
+hr {
+  margin: 24px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/*
+ * 第三堂：拆成好幾個檔案的範例，每個檔案最外層包一個
+ * <div class="file-block" data-name="檔名">，框上標檔名，看得出哪一塊是哪個檔案。
+ * 刻意不做成元件：元件是第三堂後半才教的，前面的範例先不出現 import 元件的寫法。
+ */
+.file-block {
+  position: relative;
+  margin-top: 12px;
+  padding: 20px 16px 12px;
+  border: 2px dashed var(--brand);
+  border-radius: 8px;
+}
+
+.file-block::before {
+  content: attr(data-name);
+  position: absolute;
+  top: -11px;
+  left: 12px;
+  padding: 0 6px;
+  background: #fff;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 600;
+}

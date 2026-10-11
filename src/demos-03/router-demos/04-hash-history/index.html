@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hash Router 示範</title>
+    <!-- 說明放在 index.html、不放進 .vue：.vue 要跟講義一字不差 -->
+    <style>
+      .note {
+        max-width: 640px;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        border-left: 4px solid #e6a23c;
+        background: #fdf6ec;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .note code { background: #fff; padding: 0 4px; border-radius: 3px; }
+    </style>
+  </head>
+  <body>
+    <aside class="note">
+      <strong>一樣在 /#/about 按重新整理，不會 404。</strong><br />
+      <code>#</code> 後面的部分不會送給伺服器，伺服器每次只會收到 <code>/</code>，不用另外設定。
+    </aside>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

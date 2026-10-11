@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基礎路由設定</title>
+    <!-- 說明放在 index.html、不放進 .vue：.vue 要跟講義一字不差 -->
+    <style>
+      .note {
+        max-width: 640px;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        border-left: 4px solid #e6a23c;
+        background: #fdf6ec;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .note code { background: #fff; padding: 0 4px; border-radius: 3px; }
+    </style>
+  </head>
+  <body>
+    <aside class="note">
+      <strong>點「關於我們」沒問題，但在 /about 按重新整理會 404。</strong><br />
+      點連結只是換網址，不會跟伺服器要東西；重新整理才會跟伺服器要 <code>/about</code>，伺服器沒有這個檔案，就回 404。<br />
+      上線時要在伺服器設定「找不到就回 <code>index.html</code>」，例如 Nginx 的 <code>try_files $uri /index.html</code>。
+      平常 Vite 會自動幫忙，這支範例把它關掉了。
+    </aside>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

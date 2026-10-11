@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 沒有 favicon：不宣告的話瀏覽器會去要 /favicon.ico，在 console 留一條 404，
+         而這兩頁都要人打開 console 看輸出，那條紅字只是雜訊。 -->
+    <link rel="icon" href="data:," />
+    <title>Vue.js 四堂課（SFC 環境）</title>
+  </head>
+  <body>
+    <!-- Vue 應用程式會掛在這個元素裡（見 src/main.js 的 app.mount） -->
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

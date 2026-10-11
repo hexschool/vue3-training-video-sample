@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 沒有 favicon：不宣告的話瀏覽器會去要 /favicon.ico，在 console 留一條 404，
+         而這兩頁都要人打開 console 看輸出，那條紅字只是雜訊。 -->
+    <link rel="icon" href="data:," />
+    <title>第一堂：JavaScript 地基（純 JS 環境）</title>
+    <style>
+      /* 這一頁刻意不共用 src/style.css：那一份是 Vue 那半邊的，
+         而這裡要示範的正是「沒有框架的時候，畫面與資料要自己接」。
+         版面刻意跟那邊長得一樣——兩半邊是同一堂課，畫面一致才對照得起來。 */
+      :root {
+        --line: #e2e5e2;
+        --ink: #232925;
+        --muted: #6b736c;
+        --brand: #42b883;
+        --ground: #f7f9f7;
+        font-family:
+          -apple-system, "Helvetica Neue", "PingFang TC", "Noto Sans TC",
+          sans-serif;
+        color: var(--ink);
+        line-height: 1.65;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #fff;
+      }
+
+      /* ── 版面 ───────────────────────────────────────────────────────
+         清單與範例輪流佔滿整個畫面，兩者用同一個容器，換頁時左右邊界不會跳。 */
+
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 32px 24px 64px;
+      }
+
+      /* ── 首頁清單 ─────────────────────────────────────────────────── */
+
+      .home h1 {
+        margin: 0 0 20px;
+        font-size: 22px;
+      }
+
+      .home__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 6px;
+      }
+
+      /* 一整列都是點擊範圍，不是只有標題那幾個字 */
+      .home__list button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition:
+          border-color 120ms ease-out,
+          background 120ms ease-out;
+      }
+
+      .home__list button:hover {
+        border-color: var(--brand);
+        background: var(--ground);
+      }
+
+      .home__list button:focus-visible {
+        outline: 2px solid var(--brand);
+        outline-offset: 2px;
+      }
+
+      .home__num {
+        flex: 0 0 24px;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+      }
+
+      .home__text {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .home__title {
+        display: block;
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      .home__from {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .home__go {
+        color: var(--line);
+        transition: color 120ms ease-out;
+      }
+
+      .home__list button:hover .home__go {
+        color: var(--brand);
+      }
+
+      /* 環境切換排在標題上面：它跟標題是同一層——兩個並列的半邊，
+         不是清單的附註。 */
+      .home__link {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .home__link:hover {
+        color: var(--brand);
+      }
+
+      /* ── 範例區 ───────────────────────────────────────────────────── */
+
+      .stage__back {
+        display: inline-block;
+        margin-bottom: 16px;
+        padding: 4px 0;
+        border: 0;
+        background: none;
+        color: var(--muted);
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .stage__back:hover {
+        color: var(--brand);
+      }
+
+      .stage__back:focus-visible {
+        outline: 2px solid var(--brand);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      .stage__head {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stage__head h2 {
+        margin: 0 0 4px;
+        font-size: 20px;
+      }
+
+      .stage__num {
+        color: var(--muted);
+        font-weight: 400;
+      }
+
+      .stage__from {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* 一支範例的內容。沒有外框：Vue 那半邊進到範例頁之後也是直接攤開，
+         而這一頁一次只顯示一支，框線只是在框住整個畫面。 */
+      .demo > :first-child {
+        margin-top: 0;
+      }
+
+      .demo p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .demo__run {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      button {
+        padding: 6px 14px;
+        border: 1px solid #999;
+        border-radius: 6px;
+        background: #fff;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      code {
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: #f0f2f0;
+        font-size: 13px;
+      }
+
+      /* 上一支／下一支。兩顆各自往外推，所以其中一顆不在的時候，
+         另一顆仍然待在自己那一邊，不會滑到中間去。 */
+      .stage__foot {
+        display: flex;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .stage__foot button {
+        padding: 6px 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--muted);
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .stage__foot button:hover {
+        border-color: var(--brand);
+        color: var(--ink);
+      }
+
+      .stage__prev {
+        margin-right: auto;
+      }
+
+      .stage__next {
+        margin-left: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      首頁：清單由 main.js 依 DEMOS 產生，這裡只留一個空的 <ol>。
+      刻意跟 Vue 那半邊對著寫：那邊是 v-for 一行掃過陣列，這裡要自己
+      建節點、自己塞進去。
+    -->
+    <div class="page home" id="home">
+      <a class="home__link" href="/lesson-1">→ Vue SFC 那半邊</a>
+
+      <h1>第一堂：JavaScript 地基</h1>
+
+      <ol class="home__list" id="home-list"></ol>
+    </div>
+
+    <!--
+      單支範例。四支的內容全部留在 HTML 裡，只是用 hidden 輪流顯示，
+      沒有被切走再貼回來。
+    -->
+    <div class="page stage" id="stage" hidden>
+      <!-- 返回是一顆 button 不是 <a>：它改的是這一頁的狀態，不是去別的位址 -->
+      <button type="button" class="stage__back" id="back">← 返回清單</button>
+
+      <div class="stage__head">
+        <h2>
+          <span class="stage__num" id="stage-num"></span>
+          <span id="stage-title"></span>
+        </h2>
+        <p class="stage__from" id="stage-from"></p>
+      </div>
+
+      <div class="stage__body">
+        <section class="demo" data-demo="0" hidden>
+          <p>
+            原始型別複製的是「值」，物件與陣列複製的是「參考」。五個練習，
+            結果全部在 console。
+          </p>
+          <div class="demo__run">
+            <button type="button" data-run="value-vs-reference">執行</button>
+          </div>
+        </section>
+
+        <section class="demo" data-demo="1" hidden>
+          <p>
+            一個 Promise：成功呼叫 resolve 走 <code>.then</code>、失敗呼叫
+            reject 走 <code>.catch</code>，<code>.finally</code> 兩邊都會跑。等
+            3 秒。
+          </p>
+          <div class="demo__run">
+            <button type="button" data-run="promise-basic">執行</button>
+          </div>
+        </section>
+
+        <section class="demo" data-demo="2" hidden>
+          <p>
+            打 <code>dummyjson.com</code> 取兩位使用者，三種寫法：<code
+              >.then</code
+            >
+            串接、<code>async</code> 函式。需要網路。
+          </p>
+          <div class="demo__run">
+            <button type="button" data-run="axios">執行</button>
+          </div>
+        </section>
+
+        <section class="demo" data-demo="3" hidden>
+          <p>
+            具名匯入、預設匯入、命名空間匯入三種寫法，模組在
+            <code>src/demos/plain-js/math.js</code>。
+          </p>
+          <div class="demo__run">
+            <button type="button" data-run="es-module">執行</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- 第一支沒有上一支、最後一支沒有下一支，那兩顆就不要出現——
+           disabled 的按鈕會讓人以為自己點錯了。 -->
+      <nav class="stage__foot">
+        <button type="button" class="stage__prev" id="prev" hidden></button>
+        <button type="button" class="stage__next" id="next" hidden></button>
+      </nav>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+# 依賴套件（pnpm install 會重新產生）
+node_modules/
+
+# 建置產物（pnpm build 會重新產生）
+dist/
+dist-ssr/
+
+# 環境變數檔不進版控，建立方式見 README 的「環境變數」
+.env
+.env.development
+.env.production
+
+# 本機專用的環境變數（放個人設定或機密，不進版控）
+*.local
+.env.local
+.env.*.local
+
+# 記錄檔
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# 編輯器與系統檔
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.sw?
+
+# 個人的工具設定與瀏覽器測試紀錄
+.claude/
+.playwright-mcp/
