@@ -15,12 +15,13 @@ const props = defineProps({
 // 路由表裡只有清冊上的堂次與 slug（見 router.js），所以這裡一定找得到，
 // 不必再處理「查不到」的情況。
 const lesson = computed(() => lessonById(props.lessonId))
-// 只有 comp 的才有自己的 route；只有 href 的外部範例（路由那段）上一支／下一支直接跳過。
-const demos = computed(() => lesson.value.demos.filter((demo) => demo.comp))
+// 上一支／下一支照講義順序找。相鄰那支如果是只有 href 的獨立範例，就不顯示按鈕，
+// 讓人回清單去點：跳過它會漏掉一支，連過去又會離開這個網站。
+const demos = computed(() => lesson.value.demos)
 const index = computed(() => demos.value.findIndex((demo) => demo.slug === props.slug))
 const demo = computed(() => demos.value[index.value])
-const prev = computed(() => demos.value[index.value - 1])
-const next = computed(() => demos.value[index.value + 1])
+const prev = computed(() => demos.value[index.value - 1]?.comp && demos.value[index.value - 1])
+const next = computed(() => demos.value[index.value + 1]?.comp && demos.value[index.value + 1])
 </script>
 
 <template>

@@ -80,8 +80,8 @@ vue-lesson-01/
     │
     ├── demos-04.js             # 第 4 堂有哪些範例
     └── demos-04/               # 第 4 堂
-        ├── 01-template-ref-focus.vue 等 7 支
-        └── component-demos/    # 獨立範例 03～07、10～12、16
+        ├── 01-template-ref-focus.vue 等 5 支
+        └── component-demos/    # 獨立範例 03～12、16、17
 ```
 
 幾個找檔案的小技巧：
@@ -227,22 +227,25 @@ vue-lesson-01/
 | 05 | `component-demos/05-teleport-stacking/` | Teleport 與圖層順序 | `localhost:5205` |
 | 06 | `component-demos/06-component-v-model/` | 元件的 v-model | `localhost:5206` |
 | 07 | `component-demos/07-multiple-v-model/` | 多個 v-model | `localhost:5207` |
-| 08 | `demos-04/08-directive-focus.vue` | 自訂指令 v-focus | `localhost:5173/lesson-4/08-directive-focus` |
-| 09 | `demos-04/09-directive-glow.vue` | 自訂指令 v-glow | `localhost:5173/lesson-4/09-directive-glow` |
+| 08 | `component-demos/08-directive-focus/` | 自訂指令 v-focus：區域與全域註冊 | `localhost:5208` |
+| 09 | `component-demos/09-directive-glow/` | 自訂指令 v-glow | `localhost:5209` |
 | 10 | `component-demos/10-plugin-basic/` | Plugin 基本用法 | `localhost:5210` |
-| 11 | `component-demos/11-plugin-i18n/` | 翻譯 Plugin | `localhost:5211` |
+| 11 | `component-demos/11-plugin-toast/` | Toast 通知 Plugin | `localhost:5211` |
 | 12 | `component-demos/12-pinia/` | Pinia 共用購物車 | `localhost:5212` |
 | 13 | `demos-04/13-vee-define-field.vue` | useForm 與 defineField | `localhost:5173/lesson-4/13-vee-define-field` |
 | 14 | `demos-04/14-vee-validation-schema.vue` | 驗證規則 | `localhost:5173/lesson-4/14-vee-validation-schema` |
 | 15 | `demos-04/15-vee-complete.vue` | 表單驗證完整範例 | `localhost:5173/lesson-4/15-vee-complete` |
 | 16 | `component-demos/16-cart/` | 購物車實戰 | `localhost:5216` |
+| 17 | `component-demos/17-cart-practice/` | 購物車實戰（挖空練習） | `localhost:5217` |
 
 **要注意**
 
-- 第 04、05 支（Teleport）：打開開發者工具的 Elements 分頁，看彈出視窗實際被放到哪裡，比只看畫面更容易懂。
-- 第 10、11、12、16 支：先從 `main.js` 開始看，Plugin 和 Pinia 都是在那裡用 `app.use()` 裝上去的。
+- 第 04、05 支（Teleport）：打開開發者工具的 Elements 分頁，看元素實際被放到哪裡，比只看畫面更容易懂。第 04 支有兩組按鈕：一組切換 `to`（搬到 `#toast-root` 或 `body`），一組切換 `disabled`（搬或不搬）。
+- 第 08、10～12、16 支：先從 `main.js` 開始看。自訂指令的全域註冊（`app.directive()`）、Plugin 和 Pinia（`app.use()`）都寫在那裡。
+- 第 08 支（自訂指令）：同一頁對照兩種註冊方式。`LocalFocus.vue` 自己 import 指令（區域註冊），`GlobalFocus.vue` 沒有 import，靠 `main.js` 的 `app.directive()`（全域註冊）。
 - 獨立範例畫面上的綠色虛線框，標的是「這一塊來自哪個檔案」，方便對照程式碼。
-- 第 16 支的商品圖是網路上的假圖，沒網路會破圖。
+- 第 16、17 支的商品圖是網路上的假圖，沒網路會破圖。
+- 第 17 支是第 16 支的挖空版，給現場 coding 用：畫面先用寫死的資料排好版，程式裡的 `TODO 步驟 1～8` 照講義順序標出要補的地方，補完就會跟第 16 支一樣。
 
 ## 環境變數
 

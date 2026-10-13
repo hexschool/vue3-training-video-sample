@@ -1,21 +1,33 @@
-<template>
-  <!-- Modal 移動到 body -->
-  <Teleport to="body">
-    <div class="modal-overlay">
-      <div class="modal">
-        <h2>確認刪除</h2>
-        <p>確定要刪除這筆資料嗎？</p>
-        <button>取消</button>
-        <button>確認刪除</button>
-      </div>
-    </div>
-  </Teleport>
+<script setup>
+import { ref } from 'vue'
 
-  <!-- Toast 移動到指定容器 -->
-  <Teleport to="#toast-root">
-    <div class="toast">
-      <strong>操作成功</strong>
-      <p>資料已成功儲存！</p>
-    </div>
-  </Teleport>
+// to：要搬去哪裡
+const toastTo = ref('#toast-root')
+// disabled：true 就不搬，留在原地
+const toastDisabled = ref(true)
+</script>
+
+<template>
+  <div class="file-block" data-name="App.vue">
+    <p>
+      to：
+      <button @click="toastTo = '#toast-root'">#toast-root</button>
+      <button @click="toastTo = 'body'">body</button>
+      目前：{{ toastTo }}
+    </p>
+
+    <p>
+      disabled：
+      <button @click="toastDisabled = false">搬（false）</button>
+      <button @click="toastDisabled = true">不搬（true）</button>
+      目前：{{ toastDisabled }}
+    </p>
+
+    <!-- Toast 移動到指定容器 -->
+    <Teleport :to="toastTo" :disabled="toastDisabled">
+      <div class="toast">
+        <strong>我是 Toast 喔</strong>
+      </div>
+    </Teleport>
+  </div>
 </template>

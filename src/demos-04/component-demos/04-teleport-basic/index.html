@@ -32,21 +32,6 @@
         font-weight: 600;
       }
 
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.5);
-      }
-
-      .modal {
-        padding: 24px;
-        border-radius: 12px;
-        background: #fff;
-      }
-
       #toast-root {
         position: fixed;
         top: 16px;
@@ -59,6 +44,10 @@
         border-radius: 8px;
         color: #fff;
         background: #42b883;
+      }
+
+      button + button {
+        margin-left: 8px;
       }
     </style>
   </head>

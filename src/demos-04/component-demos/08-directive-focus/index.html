@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自訂指令 v-focus</title>
+    <!-- 樣式放在 index.html、不放進 .vue：.vue 要跟講義一字不差 -->
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 32px;
+      }
+
+      /* 每個檔案最外層的 div：虛線框加上檔名，看得出畫面上哪一塊是哪個檔案 */
+      .file-block {
+        position: relative;
+        margin-top: 12px;
+        padding: 20px 16px 12px;
+        border: 2px dashed #42b883;
+        border-radius: 8px;
+      }
+
+      .file-block::before {
+        content: attr(data-name);
+        position: absolute;
+        top: -11px;
+        left: 12px;
+        padding: 0 6px;
+        background: #fff;
+        color: #42b883;
+        font-size: 13px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

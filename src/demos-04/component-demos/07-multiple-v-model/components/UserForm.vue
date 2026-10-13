@@ -5,7 +5,13 @@ const lastName = defineModel('lastName');
 
 <template>
   <div class="file-block" data-name="components/UserForm.vue">
-    <input v-model="firstName" />
-    <input v-model="lastName" />
+    <p>
+      <label for="firstName">firstName：</label>
+      <input id="firstName" v-model="firstName" />
+    </p>
+    <p>
+      <label for="lastName">lastName：</label>
+      <input id="lastName" v-model="lastName" />
+    </p>
   </div>
 </template>

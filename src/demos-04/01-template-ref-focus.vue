@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted, useTemplateRef } from 'vue'
 
-const input = useTemplateRef('input')
+const inputRef = useTemplateRef('input')
 
 onMounted(() => {
-  if (input.value) {
-    input.value.focus()
+  if (inputRef.value) {
+    inputRef.value.focus()
   }
 })
 </script>

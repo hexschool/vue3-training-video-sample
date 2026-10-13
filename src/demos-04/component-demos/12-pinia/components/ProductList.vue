@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from '../stores/cart.js';
 
+// 取得 Store 實例
 const cart = useCartStore();
 
 const products = [

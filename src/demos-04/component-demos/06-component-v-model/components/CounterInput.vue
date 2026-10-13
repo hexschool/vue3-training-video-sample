@@ -4,8 +4,7 @@ const model = defineModel();
 
 <template>
   <div class="file-block" data-name="components/CounterInput.vue">
-    <button @click="model++">
-      {{ model }}
-    </button>
+    <p>當前值：{{ model }}</p>
+    <button @click="model++">+ 1</button>
   </div>
 </template>

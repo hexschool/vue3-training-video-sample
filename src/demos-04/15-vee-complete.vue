@@ -43,27 +43,28 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <form @submit="onSubmit">
     <div>
-      <label for="email">Email</label>
+      <label for="email">Email：</label>
 
       <input id="email" v-model="email" v-bind="emailProps" type="email" />
 
-      <p>{{ errors.email }}</p>
+      <p class="error">{{ errors.email }}</p>
     </div>
 
     <div>
-      <label for="password">密碼</label>
+      <label for="password">密碼：</label>
 
-      <input
-        id="password"
-        v-model="password"
-        v-bind="passwordProps"
-        type="password"
-      />
+      <input id="password" v-model="password" v-bind="passwordProps" type="password" />
 
-      <p>{{ errors.password }}</p>
+      <p class="error">{{ errors.password }}</p>
     </div>
 
     <button type="submit" :disabled="isSubmitting">登入</button>
     <button type="button" @click="resetForm">清空</button>
   </form>
 </template>
+
+<style scoped>
+.error {
+  color: #e5534b;
+}
+</style>

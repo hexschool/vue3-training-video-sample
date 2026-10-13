@@ -1,7 +1,7 @@
 <script setup>
-import Parent from './Parent.vue'
+import ParentView from './views/ParentView.vue'
 </script>
 
 <template>
-  <Parent />
+  <ParentView />
 </template>

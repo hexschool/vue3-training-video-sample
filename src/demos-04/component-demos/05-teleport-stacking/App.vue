@@ -1,16 +1,26 @@
 <script setup>
+import { ref } from 'vue';
 import AppModal from './components/AppModal.vue';
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
   <div class="page">
+    <!-- 按鈕要放在 .overlay 上面才點得到 -->
+    <div class="toolbar">
+      <button @click="isModalOpen = !isModalOpen">
+        {{ isModalOpen ? '關閉 Modal' : '開啟 Modal' }}
+      </button>
+    </div>
+
     <div class="content">
       <!-- 1. 沒有 Teleport：Modal 被困在 .content 的 Stacking Context，會被 .overlay 蓋住 -->
-      <AppModal />
+      <AppModal v-if="isModalOpen" />
 
       <!-- 2. 改用 Teleport 搬到 body：註解掉上面那行、打開下面這段 -->
       <!-- <Teleport to="body">
-        <AppModal />
+        <AppModal v-if="isModalOpen" />
       </Teleport> -->
     </div>
 
@@ -22,6 +32,11 @@ import AppModal from './components/AppModal.vue';
 .page {
   position: relative;
   min-height: 100vh;
+}
+
+.toolbar {
+  position: relative;
+  z-index: 3;
 }
 
 .content {

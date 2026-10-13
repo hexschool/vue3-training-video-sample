@@ -33,7 +33,12 @@ const {
   },
 })
 
-const [email, emailProps] = defineField('email')
+const [email, emailProps] = defineField('email', {
+  validateOnBlur: false,
+  validateOnChange: true,
+  validateOnInput: false,
+  validateOnModelUpdate: false,
+})
 const [password, passwordProps] = defineField('password')
 
 const onSubmit = handleSubmit((values) => {
@@ -44,25 +49,17 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <form @submit="onSubmit">
     <div>
-      <input
-        v-model="email"
-        v-bind="emailProps"
-        type="email"
-        placeholder="請輸入 Email"
-      />
+      <label for="email">Email：</label>
+      <input id="email" v-model="email" v-bind="emailProps" type="email" placeholder="請輸入 Email" />
 
-      <p>{{ errors.email }}</p>
+      <p v-if="errors.email" class="error">{{ errors.email }}</p>
     </div>
 
     <div>
-      <input
-        v-model="password"
-        v-bind="passwordProps"
-        type="password"
-        placeholder="請輸入密碼"
-      />
+      <label for="password">密碼：</label>
+      <input id="password" v-model="password" v-bind="passwordProps" type="password" placeholder="請輸入密碼" />
 
-      <p>{{ errors.password }}</p>
+      <p v-if="errors.password" class="error">{{ errors.password }}</p>
     </div>
 
     <button type="submit">
@@ -70,3 +67,9 @@ const onSubmit = handleSubmit((values) => {
     </button>
   </form>
 </template>
+
+<style scoped>
+.error {
+  color: #e5534b;
+}
+</style>

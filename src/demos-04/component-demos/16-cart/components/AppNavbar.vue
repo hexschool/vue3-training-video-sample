@@ -7,7 +7,7 @@ const cartStore = useCartStore();
 <template>
   <nav class="navbar">
     <a href="#" class="logo">
-      香香麵攤
+      風景明信片小舖
     </a>
 
     <div class="cart-link">

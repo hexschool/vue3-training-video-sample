@@ -2,11 +2,12 @@
 import { useTemplateRef } from 'vue'
 import BaseModal from '../components/BaseModal.vue'
 
-const modal = useTemplateRef('modal')
+const modalRef = useTemplateRef('modal')
 
 function showModal() {
-  if (modal.value) {
-    modal.value.open()
+  // console.log('visible', modalRef.value.visible)
+  if (modalRef.value) {
+    modalRef.value.open()
   }
 }
 </script>
